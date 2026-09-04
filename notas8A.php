@@ -89,9 +89,9 @@
             foreach ($NotasOitavoAnoA as $aluno) {
                 $media = ($aluno['bim1'] + $aluno['bim2'] + $aluno['bim3'] + $aluno['bim4']) / 4;
                 if ($media >= 6) {
-                    $media = "<span style='color: green;'>" . number_format($media, 2) . "</span>";
+                    $media = "<span style='color: green;'>" . number_format($media, 1) . "</span>";
                 } else {
-                    $media = "<span style='color: red;'>" . number_format($media, 2) . "</span>";
+                    $media = "<span style='color: red;'>" . number_format($media, 1) . "</span>";
                 }
                 echo "<tr>";
                 echo "<td class='w3-center' >" . $aluno['aluno'] . "</td>";
