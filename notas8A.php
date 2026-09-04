@@ -17,6 +17,7 @@
         Os nomes e notas devem ser criados por você (não copie os do exemplo da aula).
 
 -->
+    <!-- fazendo o css interno -->
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -38,31 +39,57 @@
 
         table {
             width: 80%;
-            margin: 20px auto;
             background-color: #d2a6d0;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 
         }
 
+        tr.th {
+            padding: 5px;
+        }
 
-        td {
+        div {
+
+            text-align: center;
+            font-size: 20px;
+            background-color: #cfaed2;
+            color: #6c0474;
+        }
+
+        td{
             padding: 12px;
             text-align: center;
             border: 1px solid #d2a6d0;
             border-radius: 2px;
         }
 
-        th {
+        th{
+            padding: 12px;
+            text-align: center;
+            color: #f3e6e6;
+            background-color: #6c0474 ;
+            border: 1px solid #d2a6d0;
+            border-radius: 2px;
+        }
+
+        h2 {
             border: 1px solid #d2a6d0;
             background-color: #6c0474;
             color: white;
+            padding: 10px;
+            width: 25%;
+            margin-left: 37%;
         }
     </style>
 </head>
 
 <body>
     <h1>8º ANO A</h1>
+
+    <!-- criando a tabela -->
     <table class="w3-table-all w3-hoverable">
+
+        <!-- parte de cima da tabela-->
         <tr>
             <th class='w3-center'>Aluno</th>
             <th class='w3-center'>Bimestre 1</th>
@@ -72,11 +99,16 @@
             <th class='w3-center'>Média</th>
         </tr>
 
+
+        <!-- inserindo as linhas -->
         <tr class="w3-teal">
             <?php
+            /*
+                criando um array bidimensional com os alunos e suas notas dos 4 bimestres
+             */
             $NotasOitavoAnoA = array(
                 array('aluno' => 'João Pedro', 'bim1' => '8', 'bim2' => '8.5', 'bim3' => '9.5', 'bim4' => '10'),
-                array('aluno' => 'Maria Silva', 'bim1' => '7.5', 'bim2' => '8', 'bim3' => '8.5', 'bim4' => '9'),
+                array('aluno' => 'Maria Silva', 'bim1' => '7.5', 'bim2' => '10', 'bim3' => '8.5', 'bim4' => '9'),
                 array('aluno' => 'Ronaldo Alves', 'bim1' => '4', 'bim2' => '5', 'bim3' => '3.5', 'bim4' => '5'),
                 array('aluno' => 'Ana Paula', 'bim1' => '8.5', 'bim2' => '9', 'bim3' => '8', 'bim4' => '10'),
                 array('aluno' => 'Karoline Ribeiro', 'bim1' => '6', 'bim2' => '5.5', 'bim3' => '4.5', 'bim4' => '7'),
@@ -86,12 +118,19 @@
 
             );
 
+            /* O foreach serve para fazer uma ação a cada elemento dentro de um array, numa tradução livre seria "para cada". 
+              Para cada item no array $NotasOitavoAnoA , cada item é atribuído à variável $aluno. O código pega o primeiro
+              elemento do array: aluno 0 (array começa em 0) e ai é pedido para calcular a média de cada aluno, pegando as notas dos bimestres 
+              dividindo por eles (4). Depois é formatado com uma casa decimal, como o enunciado pedia. Depois armazeno média por média em um array para a média 
+              da turma. Por fim, é mostrado o nome, as notas e a média de cada aluno. */
             foreach ($NotasOitavoAnoA as $aluno) {
                 $media = ($aluno['bim1'] + $aluno['bim2'] + $aluno['bim3'] + $aluno['bim4']) / 4;
+                $media = number_format($media, 1);
+                $SomaMédias[] = $media;
                 if ($media >= 6) {
-                    $media = "<span style='color: green;'>" . number_format($media, 1) . "</span>";
+                    $media = "<span style='color: green;'>" . $media . "</span>";
                 } else {
-                    $media = "<span style='color: red;'>" . number_format($media, 1) . "</span>";
+                    $media = "<span style='color: red;'>" . $media . "</span>";
                 }
                 echo "<tr>";
                 echo "<td class='w3-center' >" . $aluno['aluno'] . "</td>";
@@ -106,3 +145,18 @@
         </tr>
 
     </table>
+    <!-- mostrando a média da turma-->
+    <h2 class='w3-center'> Média da Turma
+        <?php
+        /*
+            criando a variável para a média geral, usando um array_sum, para somar todos as médias
+            e dividindo pelo total de médias (alunos).
+            depois é só mostrar com o echo o número formatado.
+         */
+        $mediaTurma = array_sum($SomaMédias) / count($NotasOitavoAnoA);
+        echo ": <div>" . number_format($mediaTurma, 1) . "</div></h2>";
+        ?>
+
+</body>
+
+</html>
